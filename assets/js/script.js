@@ -11,34 +11,54 @@
             const carousels = document.querySelectorAll('.project-carousel');
             
             carousels.forEach(carousel => {
-                const settings = JSON.parse(carousel.dataset.swiperSettings);
-                
-                new Swiper(carousel, {
-                    ...settings,
-                    loop: true,
-                    effect: 'slide',
-                    speed: 800,
-                    grabCursor: true,
-                    watchSlidesProgress: true,
-                    observer: true,
-                    observeParents: true,
-                    navigation: {
-                        nextEl: carousel.querySelector('.swiper-button-next'),
-                        prevEl: carousel.querySelector('.swiper-button-prev'),
-                    },
-                    pagination: {
-                        el: carousel.querySelector('.swiper-pagination'),
-                        clickable: true,
-                    },
-                    on: {
-                        init: function() {
-                            this.update();
-                        },
-                        resize: function() {
-                            this.update();
-                        }
+                try {
+                    // Check if required elements exist
+                    const nextButton = carousel.querySelector('.swiper-button-next');
+                    const prevButton = carousel.querySelector('.swiper-button-prev');
+                    const pagination = carousel.querySelector('.swiper-pagination');
+
+                    // Parse settings safely
+                    let settings = {};
+                    try {
+                        settings = JSON.parse(carousel.dataset.swiperSettings || '{}');
+                    } catch (e) {
+                        console.warn('Invalid Swiper settings:', e);
                     }
-                });
+
+                    // Initialize Swiper with safe defaults
+                    new Swiper(carousel, {
+                        ...settings,
+                        loop: true,
+                        effect: 'slide',
+                        speed: 800,
+                        grabCursor: true,
+                        watchSlidesProgress: true,
+                        observer: true,
+                        observeParents: true,
+                        navigation: nextButton && prevButton ? {
+                            nextEl: nextButton,
+                            prevEl: prevButton,
+                        } : false,
+                        pagination: pagination ? {
+                            el: pagination,
+                            clickable: true,
+                        } : false,
+                        on: {
+                            init: function() {
+                                if (this.update) {
+                                    this.update();
+                                }
+                            },
+                            resize: function() {
+                                if (this.update) {
+                                    this.update();
+                                }
+                            }
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error initializing Swiper:', error);
+                }
             });
         }
 
@@ -73,56 +93,63 @@
 
             // Initialize lightbox Swiper
             const initLightboxSwiper = (gallery) => {
-                if (lightboxSwiper) {
-                    lightboxSwiper.destroy();
-                }
-                if (thumbsSwiper) {
-                    thumbsSwiper.destroy();
-                }
+                try {
+                    // Destroy existing instances
+                    if (lightboxSwiper) {
+                        lightboxSwiper.destroy(true, true);
+                        lightboxSwiper = null;
+                    }
+                    if (thumbsSwiper) {
+                        thumbsSwiper.destroy(true, true);
+                        thumbsSwiper = null;
+                    }
 
-                // Initialize thumbs swiper
-                thumbsSwiper = new Swiper('.lightbox-thumbs', {
-                    slidesPerView: 'auto',
-                    spaceBetween: 10,
-                    freeMode: true,
-                    watchSlidesProgress: true,
-                    centerInsufficientSlides: true,
-                    breakpoints: {
-                        320: {
-                            slidesPerView: 4,
-                        },
-                        768: {
-                            slidesPerView: 6,
-                        },
-                        1024: {
-                            slidesPerView: 8,
+                    // Initialize thumbs swiper first
+                    thumbsSwiper = new Swiper('.lightbox-thumbs', {
+                        slidesPerView: 'auto',
+                        spaceBetween: 10,
+                        freeMode: true,
+                        watchSlidesProgress: true,
+                        centerInsufficientSlides: true,
+                        breakpoints: {
+                            320: {
+                                slidesPerView: 4,
+                            },
+                            768: {
+                                slidesPerView: 6,
+                            },
+                            1024: {
+                                slidesPerView: 8,
+                            }
                         }
-                    }
-                });
+                    });
 
-                // Initialize main swiper
-                lightboxSwiper = new Swiper('.lightbox-gallery', {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
-                    navigation: {
-                        nextEl: '.lightbox-gallery .swiper-button-next',
-                        prevEl: '.lightbox-gallery .swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.lightbox-gallery .swiper-pagination',
-                        clickable: true,
-                    },
-                    keyboard: {
-                        enabled: true,
-                    },
-                    effect: 'fade',
-                    fadeEffect: {
-                        crossFade: true
-                    },
-                    thumbs: {
-                        swiper: thumbsSwiper
-                    }
-                });
+                    // Initialize main swiper
+                    lightboxSwiper = new Swiper('.lightbox-gallery', {
+                        slidesPerView: 1,
+                        spaceBetween: 30,
+                        navigation: {
+                            nextEl: '.lightbox-gallery .swiper-button-next',
+                            prevEl: '.lightbox-gallery .swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.lightbox-gallery .swiper-pagination',
+                            clickable: true,
+                        },
+                        keyboard: {
+                            enabled: true,
+                        },
+                        effect: 'fade',
+                        fadeEffect: {
+                            crossFade: true
+                        },
+                        thumbs: {
+                            swiper: thumbsSwiper
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error initializing lightbox Swiper:', error);
+                }
             };
 
             // Handle project click
@@ -130,27 +157,40 @@
                 const projectItem = e.target.closest('.project-item');
                 if (!projectItem) return;
 
-                const gallery = JSON.parse(projectItem.dataset.gallery);
-                if (!gallery || !gallery.length) return;
+                try {
+                    const gallery = JSON.parse(projectItem.dataset.gallery);
+                    if (!gallery || !gallery.length) return;
 
-                // Populate gallery
-                galleryWrapper.innerHTML = gallery.map(image => `
-                    <div class="swiper-slide">
-                        <img src="${image.url}" alt="${image.alt || ''}">
-                    </div>
-                `).join('');
+                    // Add main image to gallery if not already present
+                    const mainImage = projectItem.querySelector('.project-image img');
+                    if (mainImage && !gallery.some(img => img.url === mainImage.src)) {
+                        gallery.unshift({
+                            url: mainImage.src,
+                            alt: mainImage.alt || ''
+                        });
+                    }
 
-                // Populate thumbs
-                thumbsWrapper.innerHTML = gallery.map(image => `
-                    <div class="swiper-slide">
-                        <img src="${image.url}" alt="${image.alt || ''}">
-                    </div>
-                `).join('');
+                    // Populate gallery
+                    galleryWrapper.innerHTML = gallery.map(image => `
+                        <div class="swiper-slide">
+                            <img src="${image.url}" alt="${image.alt || ''}">
+                        </div>
+                    `).join('');
 
-                // Initialize Swipers and show lightbox
-                initLightboxSwiper(gallery);
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                    // Populate thumbs
+                    thumbsWrapper.innerHTML = gallery.map(image => `
+                        <div class="swiper-slide">
+                            <img src="${image.url}" alt="${image.alt || ''}">
+                        </div>
+                    `).join('');
+
+                    // Initialize Swipers and show lightbox
+                    initLightboxSwiper(gallery);
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } catch (error) {
+                    console.error('Error handling project click:', error);
+                }
             });
 
             // Close lightbox
@@ -158,11 +198,11 @@
                 lightbox.classList.remove('active');
                 document.body.style.overflow = '';
                 if (lightboxSwiper) {
-                    lightboxSwiper.destroy();
+                    lightboxSwiper.destroy(true, true);
                     lightboxSwiper = null;
                 }
                 if (thumbsSwiper) {
-                    thumbsSwiper.destroy();
+                    thumbsSwiper.destroy(true, true);
                     thumbsSwiper = null;
                 }
             };
@@ -204,109 +244,6 @@
                 $grid.show();
                 $button.text('Show Carousel');
             }
-        });
-
-        // Handle project item click for lightbox
-        $('.project-item').on('click', function() {
-            const gallery = $(this).data('gallery');
-            if (!gallery || gallery.length === 0) return;
-
-            // Create lightbox HTML
-            let lightboxHTML = `
-                <div class="project-lightbox">
-                    <div class="lightbox-content">
-                        <span class="lightbox-close">&times;</span>
-                        <div class="lightbox-gallery swiper">
-                            <div class="swiper-wrapper">
-            `;
-
-            // Add main image as first slide
-            const mainImage = $(this).find('.project-image img').attr('src');
-            lightboxHTML += `
-                <div class="swiper-slide">
-                    <img src="${mainImage}" alt="Main Image">
-                </div>
-            `;
-
-            // Add gallery images
-            gallery.forEach(image => {
-                lightboxHTML += `
-                    <div class="swiper-slide">
-                        <img src="${image.url}" alt="Gallery Image">
-                    </div>
-                `;
-            });
-
-            lightboxHTML += `
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                        <div class="lightbox-thumbs swiper">
-                            <div class="swiper-wrapper">
-            `;
-
-            // Add thumbnails
-            lightboxHTML += `
-                <div class="swiper-slide">
-                    <img src="${mainImage}" alt="Main Image Thumbnail">
-                </div>
-            `;
-            gallery.forEach(image => {
-                lightboxHTML += `
-                    <div class="swiper-slide">
-                        <img src="${image.url}" alt="Gallery Image Thumbnail">
-                    </div>
-                `;
-            });
-
-            lightboxHTML += `
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // Add lightbox to body
-            $('body').append(lightboxHTML);
-
-            // Initialize lightbox Swiper
-            const lightboxSwiper = new Swiper('.lightbox-gallery', {
-                navigation: {
-                    nextEl: '.lightbox-gallery .swiper-button-next',
-                    prevEl: '.lightbox-gallery .swiper-button-prev',
-                },
-                thumbs: {
-                    swiper: {
-                        el: '.lightbox-thumbs',
-                        slidesPerView: 5,
-                        spaceBetween: 10,
-                        watchSlidesProgress: true,
-                    }
-                }
-            });
-
-            // Show lightbox
-            $('.project-lightbox').addClass('active');
-
-            // Handle close button click
-            $('.lightbox-close').on('click', function() {
-                $('.project-lightbox').remove();
-            });
-
-            // Handle escape key
-            $(document).on('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    $('.project-lightbox').remove();
-                }
-            });
-
-            // Handle lightbox background click
-            $('.project-lightbox').on('click', function(e) {
-                if (e.target === this) {
-                    $('.project-lightbox').remove();
-                }
-            });
         });
     });
 

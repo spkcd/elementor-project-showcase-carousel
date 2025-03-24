@@ -1,4 +1,9 @@
 <?php
+// If this file is called directly, abort.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class Project_Carousel_Widget extends \Elementor\Widget_Base {
 
     public function get_name() {
@@ -18,15 +23,15 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_keywords() {
-        return ['project', 'carousel', 'gallery', 'showcase', 'slider'];
+        return ['project', 'carousel', 'gallery', 'showcase', 'portfolio'];
     }
 
     public function get_script_depends() {
-        return ['swiper', 'project-showcase-carousel'];
+        return ['project-showcase-carousel'];
     }
 
     public function get_style_depends() {
-        return ['swiper', 'project-showcase-carousel'];
+        return ['project-showcase-carousel'];
     }
 
     protected function register_controls() {
@@ -48,6 +53,9 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => esc_html__('Project Title', 'project-showcase-carousel'),
                 'label_block' => true,
+                'dynamic' => [
+                    'active' => true,
+                ],
             ]
         );
 
@@ -59,6 +67,9 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'default' => [
                     'url' => \Elementor\Utils::get_placeholder_image_src(),
                 ],
+                'dynamic' => [
+                    'active' => true,
+                ],
             ]
         );
 
@@ -68,6 +79,9 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'label' => esc_html__('Gallery Images', 'project-showcase-carousel'),
                 'type' => \Elementor\Controls_Manager::GALLERY,
                 'default' => [],
+                'dynamic' => [
+                    'active' => true,
+                ],
             ]
         );
 
@@ -80,13 +94,6 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'default' => [
                     [
                         'project_title' => esc_html__('Project #1', 'project-showcase-carousel'),
-                        'main_image' => [
-                            'url' => \Elementor\Utils::get_placeholder_image_src(),
-                        ],
-                        'gallery' => [],
-                    ],
-                    [
-                        'project_title' => esc_html__('Project #2', 'project-showcase-carousel'),
                         'main_image' => [
                             'url' => \Elementor\Utils::get_placeholder_image_src(),
                         ],
@@ -115,7 +122,6 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Show', 'project-showcase-carousel'),
                 'label_off' => esc_html__('Hide', 'project-showcase-carousel'),
-                'return_value' => 'yes',
                 'default' => 'yes',
             ]
         );
@@ -148,7 +154,7 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
             [
                 'label' => esc_html__('Icon Position', 'project-showcase-carousel'),
                 'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'right',
+                'default' => 'left',
                 'options' => [
                     'left' => esc_html__('Before', 'project-showcase-carousel'),
                     'right' => esc_html__('After', 'project-showcase-carousel'),
@@ -156,34 +162,6 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'condition' => [
                     'show_view_all' => 'yes',
                     'view_all_icon[value]!' => '',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'view_all_button_color',
-            [
-                'label' => esc_html__('Button Color', 'project-showcase-carousel'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .view-all-button' => 'background-color: {{VALUE}};',
-                ],
-                'condition' => [
-                    'show_view_all' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'view_all_text_color',
-            [
-                'label' => esc_html__('Text Color', 'project-showcase-carousel'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .view-all-button' => 'color: {{VALUE}};',
-                ],
-                'condition' => [
-                    'show_view_all' => 'yes',
                 ],
             ]
         );
@@ -223,7 +201,6 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Yes', 'project-showcase-carousel'),
                 'label_off' => esc_html__('No', 'project-showcase-carousel'),
-                'return_value' => 'yes',
                 'default' => 'yes',
             ]
         );
@@ -246,11 +223,10 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'navigation',
             [
-                'label' => esc_html__('Navigation', 'project-showcase-carousel'),
+                'label' => esc_html__('Navigation Arrows', 'project-showcase-carousel'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Show', 'project-showcase-carousel'),
                 'label_off' => esc_html__('Hide', 'project-showcase-carousel'),
-                'return_value' => 'yes',
                 'default' => 'yes',
             ]
         );
@@ -258,11 +234,10 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'pagination',
             [
-                'label' => esc_html__('Pagination', 'project-showcase-carousel'),
+                'label' => esc_html__('Pagination Dots', 'project-showcase-carousel'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Show', 'project-showcase-carousel'),
                 'label_off' => esc_html__('Hide', 'project-showcase-carousel'),
-                'return_value' => 'yes',
                 'default' => 'yes',
             ]
         );
@@ -310,9 +285,6 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'default' => [
                     'unit' => 'px',
                     'size' => 30,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .project-grid' => 'gap: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -493,32 +465,57 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        
+
+        // Sanitize settings
+        $settings['projects'] = array_map(function($project) {
+            return [
+                'project_title' => sanitize_text_field($project['project_title']),
+                'main_image' => [
+                    'id' => absint($project['main_image']['id']),
+                    'url' => esc_url($project['main_image']['url']),
+                ],
+                'gallery' => array_map(function($image) {
+                    return [
+                        'id' => absint($image['id']),
+                        'url' => esc_url($image['url']),
+                    ];
+                }, $project['gallery']),
+            ];
+        }, $settings['projects']);
+
         // Prepare Swiper settings
         $swiper_settings = [
-            'slidesPerView' => intval($settings['columns']),
+            'slidesPerView' => absint($settings['columns']),
             'spaceBetween' => 30,
-            'autoplay' => $settings['autoplay'] === 'yes',
-            'delay' => intval($settings['autoplay_speed']),
-            'navigation' => $settings['navigation'] === 'yes',
-            'pagination' => $settings['pagination'] === 'yes',
+            'autoplay' => $settings['autoplay'] === 'yes' ? [
+                'delay' => absint($settings['autoplay_speed']),
+                'disableOnInteraction' => false,
+            ] : false,
+            'navigation' => [
+                'nextEl' => '.swiper-button-next',
+                'prevEl' => '.swiper-button-prev',
+            ],
+            'pagination' => [
+                'el' => '.swiper-pagination',
+                'clickable' => true,
+            ],
             'breakpoints' => [
-                '320' => [
-                    'slidesPerView' => 1
+                640 => [
+                    'slidesPerView' => absint($settings['columns_tablet'] ?? 2),
                 ],
-                '768' => [
-                    'slidesPerView' => intval($settings['columns_tablet'] ?? 2)
+                480 => [
+                    'slidesPerView' => absint($settings['columns_mobile'] ?? 1),
                 ],
-                '1024' => [
-                    'slidesPerView' => intval($settings['columns'])
-                ]
-            ]
+            ],
         ];
 
+        // Prepare View All button icon
         $view_all_icon = '';
         if (!empty($settings['view_all_icon']['value'])) {
-            $view_all_icon = '<i class="' . esc_attr($settings['view_all_icon']['value']) . '"></i>';
+            $view_all_icon = \Elementor\Icons_Manager::render_icon($settings['view_all_icon'], ['aria-hidden' => 'true']);
         }
+
+        // Render the widget
         ?>
         <div class="project-showcase-wrapper">
             <div class="project-carousel" data-swiper-settings='<?php echo wp_json_encode($swiper_settings); ?>'>
@@ -560,11 +557,11 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 <div class="view-all-button-wrapper">
                     <button class="view-all-button">
                         <?php if ($view_all_icon && $settings['view_all_icon_align'] === 'left') : ?>
-                            <?php echo $view_all_icon; ?>
+                            <?php echo wp_kses_post($view_all_icon); ?>
                         <?php endif; ?>
                         <?php echo esc_html($settings['view_all_text']); ?>
                         <?php if ($view_all_icon && $settings['view_all_icon_align'] === 'right') : ?>
-                            <?php echo $view_all_icon; ?>
+                            <?php echo wp_kses_post($view_all_icon); ?>
                         <?php endif; ?>
                     </button>
                 </div>
