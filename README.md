@@ -66,7 +66,7 @@ Created by [SPARKWEB Studio](https://sparkwebstudio.com/)
 
 ## Changelog
 
-### 1.1.0 - 2024-03-21
+### 1.1.0 - 2025-03-24
 - Added "View All" button functionality to switch between carousel and grid layouts
 - Enhanced button styling controls:
   - Custom padding and margin
@@ -77,7 +77,7 @@ Created by [SPARKWEB Studio](https://sparkwebstudio.com/)
 - Added grid gap control
 - Updated plugin description and documentation
 
-### 1.0.0 - 2024-03-20
+### 1.0.0 - 2025-03-24
 - Initial release
 - Basic carousel functionality
 - Lightbox gallery support
