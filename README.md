@@ -66,6 +66,18 @@ Created by [SPARKWEB Studio](https://sparkwebstudio.com/)
 
 ## Changelog
 
+### 1.2.0 - March 24, 2025
+* Enhanced security measures:
+  * Added nonce verification for all AJAX requests
+  * Implemented input sanitization for all user data
+  * Added proper escaping for output data
+  * Improved error handling and logging
+  * Added security headers for AJAX responses
+* Added comprehensive AJAX security framework
+* Improved error handling and user feedback
+* Added security documentation
+
+
 ### 1.1.0 - 2025-03-24
 - Added "View All" button functionality to switch between carousel and grid layouts
 - Enhanced button styling controls:
