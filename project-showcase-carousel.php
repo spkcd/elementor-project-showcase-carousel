@@ -1,15 +1,16 @@
 <?php
 /**
- * Plugin Name: Project Showcase Carousel
- * Description: A custom Elementor widget that displays projects in a carousel with lightbox gallery functionality.
- * Version: 1.0.0
+ * Plugin Name: Project Showcase Carousel for Elementor
+ * Description: A customizable project showcase carousel widget for Elementor with lightbox gallery support.
+ * Version: 1.1.0
  * Author: SPARKWEB Studio
  * Author URI: https://sparkwebstudio.com/
  * Text Domain: project-showcase-carousel
- * License: GPL v2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 7.4
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if (!defined('ABSPATH')) {

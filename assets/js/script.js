@@ -186,6 +186,128 @@
     // Initialize when DOM is ready
     $(document).ready(() => {
         new ProjectCarousel();
+
+        // Handle View All button click
+        $('.view-all-button').on('click', function() {
+            const $carousel = $('.project-carousel');
+            const $grid = $('.project-grid');
+            const $button = $(this);
+            
+            if ($grid.is(':visible')) {
+                // Switch back to carousel
+                $grid.hide();
+                $carousel.show();
+                $button.text('View All');
+            } else {
+                // Switch to grid
+                $carousel.hide();
+                $grid.show();
+                $button.text('Show Carousel');
+            }
+        });
+
+        // Handle project item click for lightbox
+        $('.project-item').on('click', function() {
+            const gallery = $(this).data('gallery');
+            if (!gallery || gallery.length === 0) return;
+
+            // Create lightbox HTML
+            let lightboxHTML = `
+                <div class="project-lightbox">
+                    <div class="lightbox-content">
+                        <span class="lightbox-close">&times;</span>
+                        <div class="lightbox-gallery swiper">
+                            <div class="swiper-wrapper">
+            `;
+
+            // Add main image as first slide
+            const mainImage = $(this).find('.project-image img').attr('src');
+            lightboxHTML += `
+                <div class="swiper-slide">
+                    <img src="${mainImage}" alt="Main Image">
+                </div>
+            `;
+
+            // Add gallery images
+            gallery.forEach(image => {
+                lightboxHTML += `
+                    <div class="swiper-slide">
+                        <img src="${image.url}" alt="Gallery Image">
+                    </div>
+                `;
+            });
+
+            lightboxHTML += `
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                        <div class="lightbox-thumbs swiper">
+                            <div class="swiper-wrapper">
+            `;
+
+            // Add thumbnails
+            lightboxHTML += `
+                <div class="swiper-slide">
+                    <img src="${mainImage}" alt="Main Image Thumbnail">
+                </div>
+            `;
+            gallery.forEach(image => {
+                lightboxHTML += `
+                    <div class="swiper-slide">
+                        <img src="${image.url}" alt="Gallery Image Thumbnail">
+                    </div>
+                `;
+            });
+
+            lightboxHTML += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add lightbox to body
+            $('body').append(lightboxHTML);
+
+            // Initialize lightbox Swiper
+            const lightboxSwiper = new Swiper('.lightbox-gallery', {
+                navigation: {
+                    nextEl: '.lightbox-gallery .swiper-button-next',
+                    prevEl: '.lightbox-gallery .swiper-button-prev',
+                },
+                thumbs: {
+                    swiper: {
+                        el: '.lightbox-thumbs',
+                        slidesPerView: 5,
+                        spaceBetween: 10,
+                        watchSlidesProgress: true,
+                    }
+                }
+            });
+
+            // Show lightbox
+            $('.project-lightbox').addClass('active');
+
+            // Handle close button click
+            $('.lightbox-close').on('click', function() {
+                $('.project-lightbox').remove();
+            });
+
+            // Handle escape key
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    $('.project-lightbox').remove();
+                }
+            });
+
+            // Handle lightbox background click
+            $('.project-lightbox').on('click', function(e) {
+                if (e.target === this) {
+                    $('.project-lightbox').remove();
+                }
+            });
+        });
     });
 
 })(jQuery); 

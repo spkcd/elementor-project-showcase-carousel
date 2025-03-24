@@ -1,34 +1,27 @@
 # Project Showcase Carousel for Elementor
 
-A powerful and customizable project showcase carousel widget for Elementor, developed by [SPARKWEB Studio](https://sparkwebstudio.com/).
+A customizable project showcase carousel widget for Elementor with lightbox gallery support.
 
 ## Description
 
-Project Showcase Carousel is a custom Elementor widget that allows you to display your projects in an elegant and interactive carousel format. Each project can have a main image and a gallery of additional images that can be viewed in a beautiful lightbox.
+Project Showcase Carousel is a powerful Elementor widget that allows you to display your projects in a beautiful carousel format. With its intuitive interface and advanced features, you can create stunning project showcases that engage your visitors.
 
 ## Features
 
-- 🎯 Easy-to-use Elementor widget interface
-- 🖼️ Responsive project carousel with customizable columns
-- 🎨 Beautiful hover effects on project cards
-- 🔍 Lightbox gallery with thumbnails
-- ⚡ Smooth animations and transitions
-- 📱 Fully responsive design
-- 🎮 Touch-friendly navigation
-- ⚙️ Customizable settings:
-  - Number of columns
-  - Autoplay options
-  - Navigation controls
-  - Pagination
-  - Spacing and layout
-  - Typography and colors
+- Easy-to-use interface with Elementor
+- Responsive design that works on all devices
+- Lightbox gallery with thumbnails
+- Customizable carousel settings
+- Touch-friendly navigation
+- "View All" button to switch between carousel and grid layouts
+- Advanced styling options for all elements
+- Smooth animations and transitions
 
 ## Requirements
 
 - WordPress 5.8 or higher
 - PHP 7.4 or higher
-- Elementor 3.0 or higher
-- Elementor Pro (recommended)
+- Elementor 3.0 or higher (Elementor Pro recommended)
 
 ## Installation
 
@@ -39,53 +32,29 @@ Project Showcase Carousel is a custom Elementor widget that allows you to displa
 
 ## Usage
 
-### Adding Projects
-
 1. Edit a page with Elementor
-2. Find the "Project Showcase Carousel" widget in the "Project Showcase" category
-3. Drag and drop the widget into your page
-4. In the widget settings:
-   - Click the "+" button to add new projects
-   - For each project:
-     - Add a project title
-     - Upload a main image
-     - Add gallery images (optional)
-
-### Customizing the Carousel
-
-1. In the widget settings, go to the "Carousel Settings" tab
-2. Adjust the following options:
-   - Number of columns (1-4)
-   - Enable/disable autoplay
-   - Set autoplay speed
-   - Show/hide navigation arrows
-   - Show/hide pagination dots
-
-### Styling Options
-
-1. In the widget settings, go to the "Style" tab
-2. Customize:
-   - Project title color and typography
-   - Spacing between slides
-   - Hover effects
-   - Navigation and pagination colors
+2. Find "Project Showcase Carousel" in the widgets panel
+3. Drag and drop it into your page
+4. Add projects using the repeater field
+5. Customize the carousel settings
+6. Style your showcase using the style tab
 
 ## Lightbox Features
 
 - Click on any project to open the lightbox
-- Navigate through gallery images using:
+- Navigate through images using:
   - Arrow buttons
-  - Thumbnail navigation
   - Keyboard arrows
-  - Touch swipe
-- Close the lightbox by:
-  - Clicking the close button
-  - Clicking outside the image
-  - Pressing the ESC key
+  - Swipe gestures (on touch devices)
+- Thumbnail navigation
+- Close using:
+  - Close button
+  - ESC key
+  - Click outside the image
 
 ## Support
 
-For support, feature requests, or bug reports, please visit our [website](https://sparkwebstudio.com/) or create an issue in the GitHub repository.
+For support, please visit our website at [https://sparkwebstudio.com/](https://sparkwebstudio.com/) or create an issue in our GitHub repository.
 
 ## License
 
@@ -93,13 +62,24 @@ This plugin is licensed under the GPL v2 or later.
 
 ## Credits
 
-Developed by [SPARKWEB Studio](https://sparkwebstudio.com/)
+Created by [SPARKWEB Studio](https://sparkwebstudio.com/)
 
 ## Changelog
 
-### 1.0.0
+### 1.1.0 - 2024-03-21
+- Added "View All" button functionality to switch between carousel and grid layouts
+- Enhanced button styling controls:
+  - Custom padding and margin
+  - Typography options
+  - Border controls
+  - Hover effects and animations
+- Improved responsive design for grid layout
+- Added grid gap control
+- Updated plugin description and documentation
+
+### 1.0.0 - 2024-03-20
 - Initial release
 - Basic carousel functionality
-- Lightbox gallery with thumbnails
-- Responsive design
-- Customizable settings 
+- Lightbox gallery support
+- Project repeater field
+- Basic styling options 
