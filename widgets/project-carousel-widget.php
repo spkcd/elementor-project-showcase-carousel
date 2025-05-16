@@ -500,11 +500,18 @@ class Project_Carousel_Widget extends \Elementor\Widget_Base {
                 'clickable' => true,
             ],
             'breakpoints' => [
-                640 => [
+                // Key is min-width breakpoint in pixels
+                // For mobile (under 768px)
+                0 => [
+                    'slidesPerView' => absint($settings['columns_mobile'] ?? 1),
+                ],
+                // For tablet (768px and up)
+                768 => [
                     'slidesPerView' => absint($settings['columns_tablet'] ?? 2),
                 ],
-                480 => [
-                    'slidesPerView' => absint($settings['columns_mobile'] ?? 1),
+                // For desktop (1025px and up)
+                1025 => [
+                    'slidesPerView' => absint($settings['columns']),
                 ],
             ],
         ];

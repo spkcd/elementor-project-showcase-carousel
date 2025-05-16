@@ -1,34 +1,45 @@
 # Project Showcase Carousel for Elementor
 
-A customizable project showcase carousel widget for Elementor with lightbox gallery support.
+A customizable project showcase carousel widget for Elementor with lightbox gallery support, featuring a responsive design and touch-friendly navigation.
+
+## Version
+
+Current Version: 1.2.1 (May 16, 2025)
 
 ## Description
 
-Project Showcase Carousel is a powerful Elementor widget that allows you to display your projects in a beautiful carousel format. With its intuitive interface and advanced features, you can create stunning project showcases that engage your visitors.
+Project Showcase Carousel is a powerful Elementor widget that allows you to create beautiful project showcases with a modern carousel interface. Perfect for portfolios, product galleries, and project presentations.
 
-## Features
+### Key Features
 
-- Easy-to-use interface with Elementor
-- Responsive design that works on all devices
-- Lightbox gallery with thumbnails
-- Customizable carousel settings
-- Touch-friendly navigation
-- "View All" button to switch between carousel and grid layouts
-- Advanced styling options for all elements
-- Smooth animations and transitions
+* Easy-to-use interface with Elementor's native controls
+* Responsive design that works on all devices
+* Lightbox gallery with thumbnails
+* Customizable carousel settings
+* Touch-friendly navigation
+* "View All" button to switch between carousel and grid views
+* Customizable styling options
+* AJAX-powered for better performance
+* Built with security best practices
+
+### Latest Updates
+
+**Version 1.2.1**
+* Fixed mobile responsiveness issue where carousel showed 3 columns instead of 1 when set to single column
+* Improved responsive breakpoints for better display across different device sizes
+* Enhanced orientation change handling for improved mobile experience
 
 ## Requirements
 
-- WordPress 5.8 or higher
-- PHP 7.4 or higher
-- Elementor 3.0 or higher (Elementor Pro recommended)
+* WordPress 5.8 or higher
+* PHP 7.4 or higher
+* Elementor 3.0 or higher (Elementor Pro recommended)
 
 ## Installation
 
-1. Download the plugin zip file
-2. Go to WordPress admin panel > Plugins > Add New
-3. Click "Upload Plugin" and select the downloaded zip file
-4. Click "Install Now" and then "Activate"
+1. Upload the plugin files to the `/wp-content/plugins/project-showcase-carousel` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the Elementor page builder to add the Project Showcase Carousel widget to your page.
 
 ## Usage
 
@@ -54,11 +65,11 @@ Project Showcase Carousel is a powerful Elementor widget that allows you to disp
 
 ## Support
 
-For support, please visit our website at [https://sparkwebstudio.com/](https://sparkwebstudio.com/) or create an issue in our GitHub repository.
+For support, please visit [https://sparkwebstudio.com/](https://sparkwebstudio.com/) or create an issue in the GitHub repository.
 
 ## License
 
-This plugin is licensed under the GPL v2 or later.
+This plugin is licensed under GPLv2 or later.
 
 ## Credits
 

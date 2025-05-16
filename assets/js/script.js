@@ -51,7 +51,11 @@
                             },
                             resize: function() {
                                 if (this.update) {
-                                    this.update();
+                                    setTimeout(() => {
+                                        if (this.update) {
+                                            this.update();
+                                        }
+                                    }, 100);
                                 }
                             }
                         }
@@ -226,6 +230,18 @@
     // Initialize when DOM is ready
     $(document).ready(() => {
         new ProjectCarousel();
+        
+        // Handle orientation changes for proper mobile layout
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                const carousels = document.querySelectorAll('.project-carousel .swiper');
+                carousels.forEach(carousel => {
+                    if (carousel.swiper && carousel.swiper.update) {
+                        carousel.swiper.update();
+                    }
+                });
+            }, 200);
+        });
 
         // Handle View All button click
         $('.view-all-button').on('click', function() {

@@ -4,7 +4,7 @@ Tags: elementor, carousel, portfolio, showcase, gallery, lightbox, responsive
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ Yes, you can add unlimited projects using the repeater field in the Elementor ed
 
 == Changelog ==
 
+= 1.2.1 - May 16, 2025 =
+* Fixed: Mobile responsiveness issue where carousel showed 3 columns instead of 1 when set to single column
+* Improved: Responsive breakpoints for better display across different device sizes
+* Enhanced: Orientation change handling for improved mobile experience
+* Added: Force single column display on small mobile devices
+
 = 1.2.0 - March 24, 2025 =
 * Enhanced security measures:
   * Added nonce verification for all AJAX requests
@@ -94,6 +100,9 @@ Yes, you can add unlimited projects using the repeater field in the Elementor ed
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Important update fixing mobile responsiveness issues. Now properly displays single column on mobile devices when configured.
 
 = 1.2.0 =
 Major security update implementing comprehensive AJAX security measures and enhanced error handling.

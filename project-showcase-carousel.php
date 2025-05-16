@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Project Showcase Carousel for Elementor
  * Description: A customizable project showcase carousel widget for Elementor with lightbox gallery support.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: SPARKWEB Studio
  * Author URI: https://sparkwebstudio.com/
  * Text Domain: project-showcase-carousel
@@ -38,7 +38,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('PSC_VERSION', '1.2.0');
+define('PSC_VERSION', '1.2.1');
 define('PSC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PSC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
